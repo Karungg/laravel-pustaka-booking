@@ -48,6 +48,8 @@
             @include('partials.about')
             @include('partials.footer')
         @endif
+
+        <x-toaster-hub />
     </div>
 
     @stack('modals')
