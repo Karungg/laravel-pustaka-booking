@@ -33,6 +33,7 @@ class BookItem extends Component
                     'updated_at' => now()
                 ]);
 
+            $this->dispatch('book-stored');
             $this->info('Book successfully added!');
         }
     }

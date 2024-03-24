@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\Booking\BookingService;
 use App\Services\Booking\BookingServiceImpl;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class BookingServiceProvider extends ServiceProvider
@@ -25,6 +26,8 @@ class BookingServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::share([
+            'bookingService' => app()->make(BookingService::class)
+        ]);
     }
 }
