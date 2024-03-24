@@ -2,7 +2,7 @@
 
 namespace App\Services\Booking;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 interface BookingService
 {
@@ -11,4 +11,6 @@ interface BookingService
     public function maximumBooks(): int;
 
     public function bookAlreadyExist($bookId): bool;
+
+    public function destroy($bookId): int;
 }

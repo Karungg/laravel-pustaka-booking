@@ -11,6 +11,7 @@ class BookCount extends Component
     public $count;
 
     #[On('book-stored')]
+    #[On('book-deleted')]
     public function mount(BookingService $bookingService)
     {
         return $this->count = $bookingService->maximumBooks();
