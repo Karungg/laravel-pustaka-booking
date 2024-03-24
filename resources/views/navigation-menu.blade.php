@@ -18,11 +18,13 @@
                         {{ __('Home') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('booking.index') }}" :active="request()->routeIs('booking.index')">
-                        @livewire('bookCount')
-                    </x-nav-link>
-                </div>
+                @auth
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ route('booking.index') }}" :active="request()->routeIs('booking.index')">
+                            @livewire('bookCount')
+                        </x-nav-link>
+                    </div>
+                @endauth
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -139,14 +141,14 @@
                     </x-dropdown>
                     @guest
                         <span class="inline-flex rounded-md">
-                            <button type="button"
+                            <a href="{{ route('register') }}" wire:navigate.hover
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
                                 Register
-                            </button>
-                            <button type="button"
+                            </a>
+                            <a href="{{ route('login') }}" wire:navigate.hover
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
                                 Login
-                            </button>
+                            </a>
                         </span>
                     @endguest
                 </div>
