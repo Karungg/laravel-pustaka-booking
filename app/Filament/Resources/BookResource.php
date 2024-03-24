@@ -6,12 +6,15 @@ use App\Filament\Resources\BookResource\Pages;
 use App\Filament\Resources\BookResource\RelationManagers;
 use App\Models\Book;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class BookResource extends Resource
 {
@@ -25,59 +28,68 @@ class BookResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\Select::make('category_id')
-                    ->relationship('category', 'title')
-                    ->required(),
-                Forms\Components\TextInput::make('author')
-                    ->required()
-                    ->maxLength(64),
-                Forms\Components\TextInput::make('publisher')
-                    ->required()
-                    ->maxLength(64),
-                Forms\Components\DatePicker::make('publication_date')
-                    ->required(),
-                Forms\Components\TextInput::make('number_of_pages')
-                    ->required()
-                    ->maxLength(4),
-                Forms\Components\TextInput::make('heavy')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('wide')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('long')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('languange')
-                    ->required()
-                    ->maxLength(128),
-                Forms\Components\TextInput::make('isbn')
-                    ->required()
-                    ->maxLength(64),
-                Forms\Components\TextInput::make('stocks')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('borrowed')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('booked')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->required(),
-            ]);
+                Section::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255)
+                            ->live()
+                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                        Forms\Components\TextInput::make('slug')
+                            ->required()
+                            ->maxLength(255)
+                            ->readOnly(),
+                        Forms\Components\Select::make('category_id')
+                            ->relationship('category', 'title')
+                            ->required(),
+                        Forms\Components\TextInput::make('author')
+                            ->required()
+                            ->maxLength(64),
+                        Forms\Components\TextInput::make('publisher')
+                            ->required()
+                            ->maxLength(64),
+                        Forms\Components\RichEditor::make('description')
+                            ->columnSpanFull(),
+                        Forms\Components\FileUpload::make('image')
+                            ->image()
+                            ->required(),
+                    ])->columnSpan(8),
+                Section::make()
+                    ->schema([
+                        Forms\Components\DatePicker::make('publication_date')
+                            ->required(),
+                        Forms\Components\TextInput::make('number_of_pages')
+                            ->required()
+                            ->maxLength(4),
+                        Forms\Components\TextInput::make('heavy')
+                            ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('wide')
+                            ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('long')
+                            ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('languange')
+                            ->required()
+                            ->maxLength(128),
+                        Forms\Components\TextInput::make('isbn')
+                            ->required()
+                            ->maxLength(64),
+                        Forms\Components\TextInput::make('stocks')
+                            ->required()
+                            ->numeric()
+                            ->default(0),
+                        Forms\Components\TextInput::make('borrowed')
+                            ->required()
+                            ->numeric()
+                            ->default(0),
+                        Forms\Components\TextInput::make('booked')
+                            ->required()
+                            ->numeric()
+                            ->default(0),
+                    ])->columnSpan(4)
+            ])->columns(12);
     }
 
     public static function table(Table $table): Table

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Book;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,15 +16,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
+        Book::factory(50)->create();
 
-        $adminUser = User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
-        ]);
+        // $adminUser = User::factory()->create([
+        //     'name' => 'admin',
+        //     'email' => 'admin@example.com',
+        //     'password' => bcrypt('password'),
+        // ]);
 
-        $adminRole = Role::create(['name' => 'admin']);
-        $memberRole = Role::create(['name' => 'member']);
-        $adminUser->assignRole($adminRole);
+        // $adminRole = Role::create(['name' => 'admin']);
+        // $memberRole = Role::create(['name' => 'member']);
+        // $adminUser->assignRole($adminRole);
     }
 }
