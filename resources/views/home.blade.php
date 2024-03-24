@@ -14,7 +14,7 @@
         </div>
 
         <div class="container mx-auto">
-            {{ $this->books()->links(data: ['scrollTo' => '#books']) }}
+            {{ $this->books()->links() }}
         </div>
 
     </section>

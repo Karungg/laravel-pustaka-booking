@@ -11,4 +11,5 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::redirect('/dashboard', '/')->name('dashboard');
+    Route::get('/booking', \App\Http\Controllers\BookingController::class)->name('booking.index');
 });
