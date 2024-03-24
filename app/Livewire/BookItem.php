@@ -13,6 +13,10 @@ class BookItem extends Component
         $this->book = $book;
     }
 
+    public function storeBook($bookId)
+    {
+    }
+
     public function render()
     {
         return view('livewire.book-item');
