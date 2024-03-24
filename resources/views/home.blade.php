@@ -1,3 +1,6 @@
+@section('title')
+    Home
+@endsection
 <div>
     <section id="books" class="bg-white py-8">
 
