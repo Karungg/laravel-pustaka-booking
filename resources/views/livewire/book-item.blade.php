@@ -5,10 +5,8 @@
     </div>
     <p class="">{{ $book->title }}</p>
     <div class="flex justify-end mt-3">
-        <form wire:submit.prevent='storeBook({{ $book->id }})'>
-            <x-button>
-                {{ __('Booking') }}
-            </x-button>
-        </form>
+        <x-button wire:click.prevent='storeBook({{ $book->id }})'>
+            {{ __('Booking') }}
+        </x-button>
     </div>
 </div>

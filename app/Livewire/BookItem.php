@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Services\Booking\BookingService;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Masmerise\Toaster\Toastable;
@@ -9,6 +10,7 @@ use Masmerise\Toaster\Toastable;
 class BookItem extends Component
 {
     use Toastable;
+
     public $book;
 
     public function mount($book)
@@ -16,15 +18,23 @@ class BookItem extends Component
         $this->book = $book;
     }
 
-    public function storeBook($bookId)
+    public function storeBook(BookingService $bookingService, $bookId)
     {
-        DB::table('temps')
-            ->insert([
-                'user_id' => auth()->id(),
-                'book_id' => $bookId
-            ]);
+        if ($bookingService->maximumBooks() >= 3) {
+            $this->error('Maximum booking is 3!');
+        } elseif ($bookingService->bookAlreadyExist($bookId)) {
+            $this->error('This book is already exist in your list!');
+        } else {
+            DB::table('temps')
+                ->insert([
+                    'user_id' => auth()->id(),
+                    'book_id' => $bookId,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
 
-        $this->success('Book successfully added!');
+            $this->info('Book successfully added!');
+        }
     }
 
     public function render()
