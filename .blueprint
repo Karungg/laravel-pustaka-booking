@@ -1,0 +1,27 @@
+created:
+    - database/factories/CategoryFactory.php
+    - database/factories/BookFactory.php
+    - database/factories/TempFactory.php
+    - database/factories/BookingFactory.php
+    - database/factories/BookingItemFactory.php
+    - database/factories/BorrowFactory.php
+    - database/migrations/2024_03_24_024742_create_categories_table.php
+    - database/migrations/2024_03_24_024743_create_books_table.php
+    - database/migrations/2024_03_24_024744_create_temps_table.php
+    - database/migrations/2024_03_24_024745_create_bookings_table.php
+    - database/migrations/2024_03_24_024746_create_booking_items_table.php
+    - database/migrations/2024_03_24_024747_create_borrows_table.php
+    - app/Models/Category.php
+    - app/Models/Book.php
+    - app/Models/Temp.php
+    - app/Models/Booking.php
+    - app/Models/BookingItem.php
+    - app/Models/Borrow.php
+models:
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Category: { title: string, slug: string, relationships: { hasMany: Book } }
+    Book: { title: string, slug: string, description: 'longText nullable', category_id: 'id foreign', author: 'string:64', publisher: 'string:64', publication_date: date, number_of_pages: 'string:4', heavy: float, wide: float, long: float, languange: 'string:128', isbn: 'string:64', stocks: 'integer default:0', borrowed: 'integer default:0', booked: 'integer default:0', image: 'string default:default-cover.jpg', relationships: { belongsTo: Category, hasMany: BookingItem } }
+    Temp: { user_id: 'id foreign', book_id: 'id foreign' }
+    Booking: { user_id: 'id foreign', take_limit: date, relationships: { belongsTo: User, hasMany: BookingItem } }
+    BookingItem: { booking_id: 'id foreign', book_id: 'id foreign', relationships: { belongsTo: Booking } }
+    Borrow: { booking_id: 'id foreign', user_id: 'id foreign', return_date: date, status: 'enum:borrowed,returned,canceled', relationships: { belongsTo: Booking } }
