@@ -35,15 +35,19 @@
             </header>
         @endif
 
-        @include('partials.hero')
+        @if (Route::is('home'))
+            @include('partials.hero')
+        @endif
 
         <!-- Page Content -->
         <main>
             {{ $slot }}
         </main>
 
-        @include('partials.about')
-        @include('partials.footer')
+        @if (Route::is('home'))
+            @include('partials.about')
+            @include('partials.footer')
+        @endif
     </div>
 
     @stack('modals')
