@@ -10,6 +10,8 @@ class BookingItem extends Model
 {
     use HasFactory;
 
+    protected $table = 'booking_items';
+
     /**
      * The attributes that are mass assignable.
      *

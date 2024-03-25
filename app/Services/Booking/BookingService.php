@@ -13,4 +13,8 @@ interface BookingService
     public function bookAlreadyExist($bookId): bool;
 
     public function destroy($bookId): int;
+
+    public function getById(): Collection;
+
+    public function checkout();
 }

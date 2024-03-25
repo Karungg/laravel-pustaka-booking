@@ -63,8 +63,10 @@ class Book extends Model
 
     public function getThumbnailUrl()
     {
-        $isUrl = str_contains($this->image, 'http');
+        if (str_starts_with($this->image, 'http')) {
+            return $this->image;
+        }
 
-        return ($isUrl) ? $this->image : Storage::disk('public')->url($this->image);
+        return '/storage/' . $this->image;
     }
 }

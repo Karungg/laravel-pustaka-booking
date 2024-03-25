@@ -2,7 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\Booking as ModelsBooking;
+use App\Models\BookingItem;
 use App\Services\Booking\BookingService;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -24,6 +27,12 @@ class Booking extends Component
     public function bookings()
     {
         return $this->bookingService->getAll();
+    }
+
+    public function checkout(BookingService $bookingService)
+    {
+        $this->dispatch('checkout');
+        return $bookingService->checkout();
     }
 
     public function destroy(BookingService $bookingService, $bookId)
