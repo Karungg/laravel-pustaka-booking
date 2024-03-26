@@ -49,6 +49,6 @@ class Booking extends Component
 
     public function render()
     {
-        return view('booking.index');
+        return view('livewire.booking.index');
     }
 }

@@ -40,6 +40,6 @@ class BookItem extends Component
 
     public function render()
     {
-        return view('livewire.book-item');
+        return view('livewire.book.book-item');
     }
 }
