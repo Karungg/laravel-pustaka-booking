@@ -17,4 +17,6 @@ interface BookingService
     public function getById(): Collection;
 
     public function checkout();
+
+    public function getBookingById(): bool;
 }

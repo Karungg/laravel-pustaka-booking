@@ -56,24 +56,36 @@ class BookingServiceImpl implements BookingService
 
         $booking = Booking::insertGetId([
             'user_id' => auth()->id(),
-            'take_limit' => now()->addDays(3)
+            'take_limit' => now()->addDays(3),
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         foreach ($temps as $temp) {
             DB::table('booking_items')->insert([
                 'booking_id' => $booking,
-                'book_id' => $temp->book_id
+                'book_id' => $temp->book_id,
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
 
             DB::table('books')->where('id', $temp->book_id)
                 ->update([
                     'stocks' => DB::raw('stocks-1'),
-                    'booked' => DB::raw('booked+1')
+                    'booked' => DB::raw('booked+1'),
+                    'updated_at' => now()
                 ]);
         }
 
         DB::table('temps')
             ->where('user_id', auth()->id())
             ->delete();
+    }
+
+    public function getBookingById(): bool
+    {
+        return DB::table('bookings')
+            ->where('user_id', auth()->id())
+            ->exists();
     }
 }

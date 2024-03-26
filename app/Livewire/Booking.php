@@ -31,8 +31,12 @@ class Booking extends Component
 
     public function checkout(BookingService $bookingService)
     {
-        $this->dispatch('checkout');
-        return $bookingService->checkout();
+        if ($bookingService->getBookingById()) {
+            $this->error('Please complete your booking');
+        } else {
+            $this->dispatch('checkout');
+            return $bookingService->checkout();
+        }
     }
 
     public function destroy(BookingService $bookingService, $bookId)
