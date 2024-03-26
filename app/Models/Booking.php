@@ -39,6 +39,6 @@ class Booking extends Model
 
     public function bookingItems(): HasMany
     {
-        return $this->hasMany(BookingItem::class);
+        return $this->hasMany(BookingItem::class, 'booking_id', 'id');
     }
 }

@@ -14,6 +14,7 @@
     <div class="text-[0.8rem] p-24">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
+                <h1 class="text-base font-semibold leading-6 text-gray-900">Pustaka Booking</h1>
                 <h1 class="text-base font-semibold leading-6 text-gray-900">Invoice</h1>
                 <p class="mt-2 text-gray-600">Date : {{ now() }}
                 </p>
