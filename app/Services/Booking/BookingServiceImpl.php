@@ -94,7 +94,7 @@ class BookingServiceImpl implements BookingService
         return DB::table('booking_items')
             ->join('bookings', 'booking_id', 'bookings.id')
             ->join('books', 'booking_items.book_id', 'books.id')
-            ->select('bookings.id', 'bookings.user_id', 'bookings.take_limit', 'bookings.created_at', 'booking_items.book_id', 'books.title')
+            ->select('bookings.id', 'bookings.user_id', 'bookings.take_limit', 'bookings.created_at', 'booking_items.book_id', 'books.title', 'books.author')
             ->where('bookings.user_id', auth()->id())
             ->get();
     }

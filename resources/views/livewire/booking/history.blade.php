@@ -8,9 +8,12 @@
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     @if ($this->bookings->count() > 0)
                         <div class="min-w-full py-2 align-middle md:px-6 lg:px-8 flex justify-end">
-                            <x-button wire:click='print'>
-                                print
-                            </x-button>
+                            <form action="{{ route('history.pdf') }}" method="post">
+                                @csrf
+                                <x-button>
+                                    Print To Pdf
+                                </x-button>
+                            </form>
                         </div>
                     @endif
                     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">

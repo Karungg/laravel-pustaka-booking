@@ -15,4 +15,5 @@ Route::middleware([
     Route::redirect('/dashboard', '/')->name('dashboard');
     Route::get('/booking', Booking::class)->name('booking.index');
     Route::get('/history', History::class)->name('history.index');
+    Route::post('/history', [\App\Http\Controllers\ReportController::class, 'historyPdf'])->name('history.pdf');
 });

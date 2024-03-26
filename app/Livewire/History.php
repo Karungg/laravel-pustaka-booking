@@ -6,6 +6,7 @@ use App\Services\Booking\BookingService;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 #[Layout('layouts.app')]
 class History extends Component
