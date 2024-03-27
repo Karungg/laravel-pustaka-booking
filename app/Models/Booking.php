@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\BookingStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Booking extends Model
 {
@@ -20,6 +20,7 @@ class Booking extends Model
     protected $fillable = [
         'user_id',
         'take_limit',
+        'status',
     ];
 
     /**
@@ -31,6 +32,7 @@ class Booking extends Model
         'id' => 'integer',
         'user_id' => 'integer',
         'take_limit' => 'date',
+        'status' => BookingStatus::class
     ];
 
     public function user(): BelongsTo
@@ -40,6 +42,6 @@ class Booking extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(BookingItem::class, 'booking_id');
+        return $this->hasMany(BookingItem::class);
     }
 }

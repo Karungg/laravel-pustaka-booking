@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('booking_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->date('return_date');
-            $table->enum('status', ["borrowed","returned","canceled"]);
+            $table->enum('status', ["borrowed","returned"]);
             $table->timestamps();
         });
 

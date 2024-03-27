@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\BookingStatus;
 use App\Filament\Resources\BookingResource\Pages;
 use App\Filament\Resources\BookingResource\RelationManagers;
 use App\Filament\Resources\BookingResource\RelationManagers\BookingItemsRelationManager;
@@ -34,9 +35,13 @@ class BookingResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('user_id')
                             ->relationship('user', 'name')
-                            ->required(),
+                            ->disabled(),
                         Forms\Components\DatePicker::make('take_limit')
                             ->required(),
+                        Forms\Components\ToggleButtons::make('status')
+                            ->options(BookingStatus::class)
+                            ->required()
+                            ->inline(),
                     ]),
                 Section::make()
                     ->schema([
@@ -55,8 +60,8 @@ class BookingResource extends Resource
                 Tables\Columns\TextColumn::make('take_limit')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('items.book_id')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

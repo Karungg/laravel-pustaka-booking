@@ -26,19 +26,19 @@ class BookFactory extends Factory
             'slug' => $this->faker->slug(),
             'description' => $this->faker->text(),
             'category_id' => Category::factory(),
-            'author' => $this->faker->name(),
-            'publisher' => $this->faker->company(),
+            'author' => $this->faker->regexify('[A-Za-z0-9]{64}'),
+            'publisher' => $this->faker->regexify('[A-Za-z0-9]{64}'),
             'publication_date' => $this->faker->date(),
             'number_of_pages' => $this->faker->regexify('[A-Za-z0-9]{4}'),
             'heavy' => $this->faker->randomFloat(0, 0, 9999999999.),
             'wide' => $this->faker->randomFloat(0, 0, 9999999999.),
             'long' => $this->faker->randomFloat(0, 0, 9999999999.),
-            'languange' => $this->faker->country(),
+            'languange' => $this->faker->regexify('[A-Za-z0-9]{128}'),
             'isbn' => $this->faker->regexify('[A-Za-z0-9]{64}'),
             'stocks' => $this->faker->numberBetween(-10000, 10000),
             'borrowed' => $this->faker->numberBetween(-10000, 10000),
             'booked' => $this->faker->numberBetween(-10000, 10000),
-            'image' => $this->faker->imageUrl(1410, 2250),
+            'image' => $this->faker->imageUrl(1410, 2550),
         ];
     }
 }

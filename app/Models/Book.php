@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Storage;
 
 class Book extends Model
 {
@@ -63,10 +62,10 @@ class Book extends Model
 
     public function getThumbnailUrl()
     {
-        if (str_starts_with($this->image, 'http')) {
-            return $this->image;
+        if (str_starts_with($this->thumbnail, 'http')) {
+            return $this->thumbnail;
         }
 
-        return '/storage/' . $this->image;
+        return '/storage/' . $this->thumbnail;
     }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->date('take_limit');
+            $table->enum('status', ["accept","canceled"]);
             $table->timestamps();
         });
 

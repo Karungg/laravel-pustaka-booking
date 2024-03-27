@@ -10,8 +10,6 @@ class BookingItem extends Model
 {
     use HasFactory;
 
-    protected $table = 'booking_items';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -32,4 +30,14 @@ class BookingItem extends Model
         'booking_id' => 'integer',
         'book_id' => 'integer',
     ];
+
+    public function booking(): BelongsTo
+    {
+        return $this->belongsTo(Booking::class);
+    }
+
+    public function book(): BelongsTo
+    {
+        return $this->belongsTo(Book::class);
+    }
 }

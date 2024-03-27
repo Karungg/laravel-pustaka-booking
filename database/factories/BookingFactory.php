@@ -24,6 +24,7 @@ class BookingFactory extends Factory
         return [
             'user_id' => User::factory(),
             'take_limit' => $this->faker->date(),
+            'status' => $this->faker->randomElement(["accept","canceled"]),
         ];
     }
 }
