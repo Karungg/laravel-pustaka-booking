@@ -59,4 +59,13 @@ class Book extends Model
     {
         return $this->hasMany(BookingItem::class);
     }
+
+    public function getThumbnailUrl()
+    {
+        if (str_starts_with($this->image, 'http')) {
+            return $this->image;
+        }
+
+        return '/storage/' . $this->image;
+    }
 }

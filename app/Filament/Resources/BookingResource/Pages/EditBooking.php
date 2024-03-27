@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\BookingResource\Pages;
 
+use App\Enums\BookingStatus;
 use App\Filament\Resources\BookingResource;
 use App\Models\Borrow;
 use App\Services\Borrow\BorrowService;
@@ -13,6 +14,11 @@ class EditBooking extends EditRecord
 {
     protected static string $resource = BookingResource::class;
 
+    protected function getRedirectUrl(): ?string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -20,6 +26,8 @@ class EditBooking extends EditRecord
             Actions\Action::make('Accept')
                 ->action(function (BorrowService $borrowService): void {
                     $borrowService->borrowProcess();
+                })->visible(function () {
+                    return $this->record->status == BookingStatus::Pending;
                 }),
         ];
     }

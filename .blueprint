@@ -7,14 +7,14 @@ created:
     - database/factories/BorrowFactory.php
     - database/factories/BorrowItemFactory.php
     - database/factories/SettingFactory.php
-    - database/migrations/2024_03_27_161334_create_categories_table.php
-    - database/migrations/2024_03_27_161335_create_books_table.php
-    - database/migrations/2024_03_27_161336_create_temps_table.php
-    - database/migrations/2024_03_27_161337_create_bookings_table.php
-    - database/migrations/2024_03_27_161338_create_booking_items_table.php
-    - database/migrations/2024_03_27_161339_create_borrows_table.php
-    - database/migrations/2024_03_27_161340_create_borrow_items_table.php
-    - database/migrations/2024_03_27_161341_create_settings_table.php
+    - database/migrations/2024_03_28_031447_create_categories_table.php
+    - database/migrations/2024_03_28_031448_create_books_table.php
+    - database/migrations/2024_03_28_031449_create_temps_table.php
+    - database/migrations/2024_03_28_031450_create_bookings_table.php
+    - database/migrations/2024_03_28_031451_create_booking_items_table.php
+    - database/migrations/2024_03_28_031452_create_borrows_table.php
+    - database/migrations/2024_03_28_031453_create_borrow_items_table.php
+    - database/migrations/2024_03_28_031454_create_settings_table.php
     - app/Models/Category.php
     - app/Models/Book.php
     - app/Models/Temp.php
@@ -28,8 +28,8 @@ models:
     Category: { title: string, slug: string, relationships: { hasMany: Book } }
     Book: { title: string, slug: string, description: 'longText nullable', category_id: 'id foreign', author: 'string:64', publisher: 'string:64', publication_date: date, number_of_pages: 'string:4', heavy: float, wide: float, long: float, languange: 'string:128', isbn: 'string:64', stocks: 'integer default:0', borrowed: 'integer default:0', booked: 'integer default:0', image: 'string default:default-cover.jpg', relationships: { belongsTo: Category, hasMany: BookingItem } }
     Temp: { user_id: 'id foreign', book_id: 'id foreign' }
-    Booking: { user_id: 'id foreign', take_limit: date, relationships: { belongsTo: User, hasMany: BookingItem } }
+    Booking: { user_id: 'id foreign', take_limit: date, status: 'enum:pending,accepted', relationships: { belongsTo: User, hasMany: BookingItem } }
     BookingItem: { booking_id: 'id foreign', book_id: 'id foreign' }
-    Borrow: { booking_id: 'id foreign', user_id: 'id foreign', return_date: date, return_of_date: date, status: 'enum:borrowed,returned', total_fine: integer, relationships: { belongsTo: Booking } }
+    Borrow: { booking_id: 'id foreign', user_id: 'id foreign', return_date: date, return_of_date: 'date nullable', status: 'enum:borrowed,returned', total_fine: integer, relationships: { belongsTo: Booking } }
     BorrowItem: { borrow_id: 'id foreign', book_id: 'id foreign', fine: integer }
     Setting: { borrow_duration: int, fine: integer }

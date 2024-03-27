@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\BorrowStatus;
 use App\Filament\Resources\BorrowResource\Pages;
 use App\Filament\Resources\BorrowResource\RelationManagers;
 use App\Models\Borrow;
@@ -35,7 +36,9 @@ class BorrowResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('return_date')
                     ->required(),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\ToggleButtons::make('status')
+                    ->inline()
+                    ->options(BorrowStatus::class)
                     ->required(),
             ]);
     }
@@ -53,7 +56,12 @@ class BorrowResource extends Resource
                 Tables\Columns\TextColumn::make('return_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\TextColumn::make('return_of_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge(),
+                Tables\Columns\TextColumn::make('total_fine'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

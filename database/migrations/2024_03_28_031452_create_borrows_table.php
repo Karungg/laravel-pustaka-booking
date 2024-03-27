@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('borrows', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('booking_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->date('take_limit');
+            $table->date('return_date');
+            $table->date('return_of_date')->nullable();
+            $table->enum('status', ["borrowed","returned"]);
+            $table->integer('total_fine');
             $table->timestamps();
         });
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('borrows');
     }
 };

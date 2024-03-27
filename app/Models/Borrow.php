@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BorrowStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,6 +23,7 @@ class Borrow extends Model
         'return_of_date',
         'status',
         'total_fine',
+        'status' => BorrowStatus::class
     ];
 
     /**

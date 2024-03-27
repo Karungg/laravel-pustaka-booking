@@ -2,6 +2,7 @@
 
 namespace App\Services\Booking;
 
+use App\Enums\BookingStatus;
 use App\Models\Booking;
 use App\Services\Booking\BookingService;
 use Illuminate\Support\Collection;
@@ -86,6 +87,7 @@ class BookingServiceImpl implements BookingService
     {
         return DB::table('bookings')
             ->where('user_id', auth()->id())
+            ->whereNot('status', BookingStatus::Accepted)
             ->exists();
     }
 
