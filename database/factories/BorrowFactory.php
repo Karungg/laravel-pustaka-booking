@@ -26,7 +26,9 @@ class BorrowFactory extends Factory
             'booking_id' => Booking::factory(),
             'user_id' => User::factory(),
             'return_date' => $this->faker->date(),
+            'return_of_date' => $this->faker->date(),
             'status' => $this->faker->randomElement(["borrowed","returned"]),
+            'total_fine' => $this->faker->numberBetween(-10000, 10000),
         ];
     }
 }

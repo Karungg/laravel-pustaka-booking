@@ -98,7 +98,7 @@ class BookingResource extends Resource
 
     public static function getItemsRepeater(): Repeater
     {
-        return Repeater::make('items')
+        return Repeater::make('bookingItems')
             ->label('Books')
             ->relationship()
             ->schema([

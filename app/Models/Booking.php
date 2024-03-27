@@ -19,7 +19,6 @@ class Booking extends Model
     protected $fillable = [
         'user_id',
         'take_limit',
-        'status',
     ];
 
     /**

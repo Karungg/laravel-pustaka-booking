@@ -19,7 +19,9 @@ class Borrow extends Model
         'booking_id',
         'user_id',
         'return_date',
+        'return_of_date',
         'status',
+        'total_fine',
     ];
 
     /**
@@ -32,6 +34,7 @@ class Borrow extends Model
         'booking_id' => 'integer',
         'user_id' => 'integer',
         'return_date' => 'date',
+        'return_of_date' => 'date',
     ];
 
     public function booking(): BelongsTo

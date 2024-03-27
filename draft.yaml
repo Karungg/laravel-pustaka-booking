@@ -34,7 +34,6 @@ models:
   Booking:
     user_id: id foreign
     take_limit: date
-    status: enum:accept,canceled
     relationships:
       belongsTo: User
       hasMany: BookingItem
@@ -47,10 +46,17 @@ models:
     booking_id: id foreign
     user_id: id foreign
     return_date: date
+    return_of_date: date
     status: enum:borrowed,returned
+    total_fine: integer
     relationships:
       belongsTo: Booking
 
+  BorrowItem:
+    borrow_id: id foreign
+    book_id: id foreign
+    fine: integer
+
   Setting:
     borrow_duration: int
-    fine: bigInt
+    fine: integer

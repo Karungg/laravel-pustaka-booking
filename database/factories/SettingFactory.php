@@ -22,7 +22,7 @@ class SettingFactory extends Factory
     {
         return [
             'borrow_duration' => $this->faker->word(),
-            'fine' => $this->faker->word(),
+            'fine' => $this->faker->numberBetween(-10000, 10000),
         ];
     }
 }
