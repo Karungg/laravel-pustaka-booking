@@ -4,8 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BookingResource\Pages;
 use App\Filament\Resources\BookingResource\RelationManagers;
+use App\Filament\Resources\BookingResource\RelationManagers\BookingItemsRelationManager;
+use App\Models\Book;
 use App\Models\Booking;
+use Filament\Actions\Action;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,11 +30,18 @@ class BookingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
-                Forms\Components\DatePicker::make('take_limit')
-                    ->required(),
+                Section::make()
+                    ->schema([
+                        Forms\Components\Select::make('user_id')
+                            ->relationship('user', 'name')
+                            ->required(),
+                        Forms\Components\DatePicker::make('take_limit')
+                            ->required(),
+                    ]),
+                Section::make()
+                    ->schema([
+                        static::getItemsRepeater()
+                    ])
             ]);
     }
 
@@ -42,6 +54,8 @@ class BookingResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('take_limit')
                     ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('items.book_id')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -56,7 +70,7 @@ class BookingResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -67,16 +81,29 @@ class BookingResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListBookings::route('/'),
-            'view' => Pages\ViewBooking::route('/{record}'),
+            'edit' => Pages\EditBooking::route('/{record}/edit'),
         ];
+    }
+
+    public static function getItemsRepeater(): Repeater
+    {
+        return Repeater::make('items')
+            ->label('Books')
+            ->relationship()
+            ->schema([
+                Forms\Components\Select::make('book_id')
+                    ->label('Title')
+                    ->columnSpanFull()
+                    ->options(Book::query()->pluck('title', 'id'))
+                    ->disabled(),
+            ])->deletable(false)
+            ->addable(false);
     }
 }
