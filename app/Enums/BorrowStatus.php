@@ -19,16 +19,16 @@ enum BorrowStatus: string implements HasLabel, HasIcon, HasColor
     public function getIcon(): ?string
     {
         return match ($this) {
-            self::Borrowed => 'heroicon-m-check',
-            self::Returned => 'heroicon-m-x-mark'
+            self::Borrowed => 'heroicon-m-x-mark',
+            self::Returned => 'heroicon-m-check'
         };
     }
 
     public function getColor(): string|array|null
     {
         return match ($this) {
-            self::Borrowed => 'success',
-            self::Returned => 'danger'
+            self::Borrowed => 'danger',
+            self::Returned => 'success'
         };
     }
 }

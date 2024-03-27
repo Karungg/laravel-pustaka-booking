@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class BookingItem extends Model
+class Setting extends Model
 {
     use HasFactory;
 
@@ -16,8 +15,8 @@ class BookingItem extends Model
      * @var array
      */
     protected $fillable = [
-        'booking_id',
-        'book_id',
+        'borrow_duration',
+        'fine',
     ];
 
     /**
@@ -27,17 +26,5 @@ class BookingItem extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'booking_id' => 'integer',
-        'book_id' => 'integer',
     ];
-
-    public function booking(): BelongsTo
-    {
-        return $this->belongsTo(Booking::class);
-    }
-
-    public function book(): BelongsTo
-    {
-        return $this->belongsTo(Book::class);
-    }
 }

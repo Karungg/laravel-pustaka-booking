@@ -27,6 +27,8 @@ class BookingResource extends Resource
 
     protected static ?string $navigationGroup = 'Transaction';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -38,10 +40,6 @@ class BookingResource extends Resource
                             ->disabled(),
                         Forms\Components\DatePicker::make('take_limit')
                             ->required(),
-                        Forms\Components\ToggleButtons::make('status')
-                            ->options(BookingStatus::class)
-                            ->required()
-                            ->inline(),
                     ]),
                 Section::make()
                     ->schema([
@@ -61,6 +59,7 @@ class BookingResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->default('Pending')
                     ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

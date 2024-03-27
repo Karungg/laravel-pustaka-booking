@@ -4,18 +4,16 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Book;
-use App\Models\Booking;
-use App\Models\BookingItem;
+use App\Models\Setting;
 
-class BookingItemFactory extends Factory
+class SettingFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = BookingItem::class;
+    protected $model = Setting::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +21,8 @@ class BookingItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'booking_id' => Booking::factory(),
-            'book_id' => Book::factory(),
+            'borrow_duration' => $this->faker->word(),
+            'fine' => $this->faker->word(),
         ];
     }
 }

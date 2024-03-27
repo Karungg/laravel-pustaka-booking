@@ -38,7 +38,7 @@ class BookFactory extends Factory
             'stocks' => $this->faker->numberBetween(-10000, 10000),
             'borrowed' => $this->faker->numberBetween(-10000, 10000),
             'booked' => $this->faker->numberBetween(-10000, 10000),
-            'image' => $this->faker->imageUrl(1410, 2550),
+            'image' => $this->faker->word(),
         ];
     }
 }

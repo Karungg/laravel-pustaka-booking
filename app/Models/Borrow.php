@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\BorrowStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,7 +32,6 @@ class Borrow extends Model
         'booking_id' => 'integer',
         'user_id' => 'integer',
         'return_date' => 'date',
-        'status' => BorrowStatus::class
     ];
 
     public function booking(): BelongsTo

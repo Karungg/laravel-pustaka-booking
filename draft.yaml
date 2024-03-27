@@ -50,3 +50,7 @@ models:
     status: enum:borrowed,returned
     relationships:
       belongsTo: Booking
+
+  Setting:
+    borrow_duration: int
+    fine: bigInt
