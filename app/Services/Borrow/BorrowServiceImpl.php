@@ -14,26 +14,18 @@ class BorrowServiceImpl implements BorrowService
             ->where('bookings.user_id', auth()->id())
             ->get();
 
-        $bookingId = DB::table('booking_items')
-            ->join('bookings', 'booking_id', 'bookings.id')
-            ->where('bookings.user_id', auth()->id())
-            ->first()->id;
-
-        $takeLimit = DB::table('booking_items')
-            ->join('bookings', 'booking_id', 'bookings.id')
-            ->where('bookings.user_id', auth()->id())
-            ->first()->take_limit;
-
-        DB::table('borrows')
-            ->insert([
-                'booking_id' => $bookingId,
-                'user_id' => auth()->id(),
-                'return_date' => $takeLimit,
-                'status' => 'borrowed',
-                'total_fine' => 0,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
+        foreach ($booking as $data) {
+            DB::table('borrows')
+                ->insert([
+                    'booking_id' => $data->booking_id,
+                    'user_id' => auth()->id(),
+                    'return_date' => $data->take_limit,
+                    'status' => 'borrowed',
+                    'total_fine' => 0,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+        }
 
         DB::table('booking_items')
             ->join('bookings', 'booking_id', 'bookings.id')

@@ -59,6 +59,7 @@ class BookingResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->sortable()
                     ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

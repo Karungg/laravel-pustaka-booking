@@ -23,21 +23,20 @@ class Borrow extends Model
         'return_of_date',
         'status',
         'total_fine',
-        'status' => BorrowStatus::class
+        'status'
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-        'booking_id' => 'integer',
-        'user_id' => 'integer',
-        'return_date' => 'date',
-        'return_of_date' => 'date',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'id' => 'integer',
+            'booking_id' => 'integer',
+            'user_id' => 'integer',
+            'return_date' => 'date',
+            'return_of_date' => 'date',
+            'status' => BorrowStatus::class
+        ];
+    }
 
     public function booking(): BelongsTo
     {

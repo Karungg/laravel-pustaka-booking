@@ -23,17 +23,15 @@ class Booking extends Model
         'status',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-        'user_id' => 'integer',
-        'take_limit' => 'date',
-        'status' => BookingStatus::class
-    ];
+    protected function casts(): array
+    {
+        return [
+            'id' => 'integer',
+            'user_id' => 'integer',
+            'take_limit' => 'date',
+            'status' => BookingStatus::class
+        ];
+    }
 
     public function user(): BelongsTo
     {
