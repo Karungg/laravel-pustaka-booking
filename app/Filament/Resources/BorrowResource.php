@@ -5,8 +5,13 @@ namespace App\Filament\Resources;
 use App\Enums\BorrowStatus;
 use App\Filament\Resources\BorrowResource\Pages;
 use App\Filament\Resources\BorrowResource\RelationManagers;
+use App\Models\Book;
 use App\Models\Borrow;
+use App\Models\Setting;
+use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -28,18 +33,26 @@ class BorrowResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('booking_id')
-                    ->relationship('booking', 'id')
-                    ->required(),
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
-                Forms\Components\DatePicker::make('return_date')
-                    ->required(),
-                Forms\Components\ToggleButtons::make('status')
-                    ->inline()
-                    ->options(BorrowStatus::class)
-                    ->required(),
+                Section::make()
+                    ->schema([
+                        Forms\Components\Select::make('booking_id')
+                            ->relationship('booking', 'id')
+                            ->disabled(),
+                        Forms\Components\Select::make('user_id')
+                            ->relationship('user', 'name')
+                            ->disabled(),
+                        Forms\Components\DatePicker::make('return_date')
+                            ->readOnly(),
+                        Forms\Components\DatePicker::make('return_of_date'),
+                        Forms\Components\ToggleButtons::make('status')
+                            ->inline()
+                            ->options(BorrowStatus::class)
+                            ->required(),
+                    ]),
+                Section::make()
+                    ->schema([
+                        static::getItemsRepeater()
+                    ])->columnSpanFull()
             ]);
     }
 
@@ -49,7 +62,8 @@ class BorrowResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('booking.id')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
@@ -61,7 +75,21 @@ class BorrowResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge(),
-                Tables\Columns\TextColumn::make('total_fine'),
+                Tables\Columns\TextColumn::make('total_fine')
+                    ->default(0)
+                    ->getStateUsing(function (Borrow $record) {
+                        $return_of_date = $record->return_of_date ? $record->return_of_date : null;
+
+                        if ($record->return_date > $return_of_date) {
+                            return 0;
+                        }
+
+                        $setting = Setting::first();
+
+                        $diff = $return_of_date ? $record->return_date->diffInDays($return_of_date) : 0;
+                        $total_fine = $diff * $setting->fine;
+                        return $total_fine;
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -98,5 +126,20 @@ class BorrowResource extends Resource
             'create' => Pages\CreateBorrow::route('/create'),
             'edit' => Pages\EditBorrow::route('/{record}/edit'),
         ];
+    }
+
+    public static function getItemsRepeater(): Repeater
+    {
+        return Repeater::make('borrowItems')
+            ->label('Books')
+            ->relationship()
+            ->schema([
+                Forms\Components\Select::make('book_id')
+                    ->label('Title')
+                    ->columnSpanFull()
+                    ->options(Book::query()->pluck('title', 'id'))
+                    ->disabled(),
+            ])->deletable(false)
+            ->addable(false);
     }
 }

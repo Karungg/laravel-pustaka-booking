@@ -6,6 +6,7 @@ use App\Enums\BorrowStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Borrow extends Model
 {
@@ -36,6 +37,11 @@ class Borrow extends Model
             'return_of_date' => 'date',
             'status' => BorrowStatus::class
         ];
+    }
+
+    public function borrowItems(): HasMany
+    {
+        return $this->hasMany(BorrowItem::class);
     }
 
     public function booking(): BelongsTo
