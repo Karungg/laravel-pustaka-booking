@@ -25,7 +25,7 @@ class EditBooking extends EditRecord
             Actions\DeleteAction::make(),
             Actions\Action::make('Accept')
                 ->action(function (BorrowService $borrowService): void {
-                    $borrowService->borrowProcess();
+                    $borrowService->borrowProcess($this->record->id);
                 })->visible(function () {
                     return $this->record->status == BookingStatus::Pending;
                 }),

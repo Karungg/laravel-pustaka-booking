@@ -18,7 +18,3 @@ Route::middleware([
     Route::get('/history', History::class)->name('history.index');
     Route::post('/history', [\App\Http\Controllers\ReportController::class, 'historyPdf'])->name('history.pdf');
 });
-
-Route::get('/test', function (BorrowService $borrowService) {
-    return $borrowService->borrowProcess();
-});
