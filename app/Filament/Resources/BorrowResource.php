@@ -88,6 +88,11 @@ class BorrowResource extends Resource
 
                         $diff = $return_of_date ? $record->return_date->diffInDays($return_of_date) : 0;
                         $total_fine = $diff * $setting->fine;
+
+                        $record->update([
+                            'total_fine' => $total_fine
+                        ]);
+
                         return $total_fine;
                     }),
                 Tables\Columns\TextColumn::make('created_at')
