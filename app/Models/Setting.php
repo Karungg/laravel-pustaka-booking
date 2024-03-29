@@ -22,9 +22,12 @@ class Setting extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @method array
      */
-    protected $casts = [
-        'id' => 'integer',
-    ];
+    protected function casts()
+    {
+        return [
+            'id' => 'integer',
+        ];
+    }
 }

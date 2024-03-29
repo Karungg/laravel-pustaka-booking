@@ -25,9 +25,12 @@ class Category extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'id' => 'integer',
-    ];
+    protected function casts()
+    {
+        return [
+            'id' => 'integer',
+        ];
+    }
 
     public function books(): HasMany
     {

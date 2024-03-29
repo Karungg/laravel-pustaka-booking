@@ -23,13 +23,16 @@ class Temp extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @method array
      */
-    protected $casts = [
-        'id' => 'integer',
-        'user_id' => 'integer',
-        'book_id' => 'integer',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'id' => 'integer',
+            'user_id' => 'integer',
+            'book_id' => 'integer',
+        ];
+    }
 
     public function user(): BelongsTo
     {
