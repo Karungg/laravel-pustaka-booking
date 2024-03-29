@@ -51,7 +51,11 @@ class BookResource extends Resource
                             ->columnSpanFull(),
                         Forms\Components\FileUpload::make('image')
                             ->image()
-                            ->required(),
+                            ->required()
+                            ->imageResizeMode('force')
+                            ->imageCropAspectRatio('4:3')
+                            ->imageResizeTargetHeight('1410')
+                            ->imageResizeTargetWidth('2250'),
                     ])->columnSpan(8),
                 Section::make()
                     ->schema([

@@ -5,8 +5,6 @@
 
         <div class="flex flex-col w-full lg:w-1/2 justify-center items-start  px-6 tracking-wide">
             <h1 class="text-black text-2xl my-4">Pustaka Booking</h1>
-            <a class="text-xl inline-block no-underline border-b border-gray-600 leading-relaxed hover:text-black hover:border-black"
-                href="#">Books</a>
 
         </div>
 

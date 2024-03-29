@@ -3,7 +3,7 @@
 
         <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
             href="#">
-            Store
+            Books
         </a>
 
         <div class="flex items-center" id="store-nav-content">

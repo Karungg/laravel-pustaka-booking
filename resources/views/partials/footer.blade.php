@@ -3,11 +3,7 @@
         <div class="w-full mx-auto flex flex-wrap">
             <div class="flex w-full lg:w-1/2 ">
                 <div class="px-3 md:px-0">
-                    <h3 class="font-bold text-gray-900">About</h3>
-                    <p class="py-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel mi ut felis tempus
-                        commodo nec id erat. Suspendisse consectetur dapibus velit ut lacinia.
-                    </p>
+                    <h3 class="font-bold text-gray-900">Pustaka Booking</h3>
                 </div>
             </div>
             <div class="flex w-full lg:w-1/2 lg:justify-end lg:text-right mt-6 md:mt-0">
