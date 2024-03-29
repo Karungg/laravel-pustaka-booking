@@ -79,6 +79,9 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="mt-2">
+                            {{ $this->bookings()->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@ class History extends Component
 
     private BookingService $bookingService;
 
-    public function mount(BookingService $bookingService)
+    public function boot(BookingService $bookingService)
     {
         $this->bookingService = $bookingService;
     }
