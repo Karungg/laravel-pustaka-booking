@@ -23,7 +23,7 @@ class BorrowServiceImpl implements BorrowService
             ->where('booking_id', $bookingId)
             ->get();
 
-        $borrow = DB::table('borrows')
+        $borrowId = DB::table('borrows')
             ->insertGetId([
                 'booking_id' => $bookingId,
                 'user_id' => $booking->user_id,
@@ -37,7 +37,7 @@ class BorrowServiceImpl implements BorrowService
         foreach ($bookingItems as $item) {
             DB::table('borrow_items')
                 ->insert([
-                    'borrow_id' => $borrow,
+                    'borrow_id' => $borrowId,
                     'book_id' => $item->book_id,
                     'created_at' => now(),
                     'updated_at' => now()

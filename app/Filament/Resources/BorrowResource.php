@@ -4,11 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Enums\BorrowStatus;
 use App\Filament\Resources\BorrowResource\Pages;
-use App\Filament\Resources\BorrowResource\RelationManagers;
 use App\Models\Book;
 use App\Models\Borrow;
 use App\Models\Setting;
-use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
@@ -16,8 +14,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BorrowResource extends Resource
 {
@@ -74,9 +70,10 @@ class BorrowResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->badge(),
+                    ->badge()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('total_fine')
-                    ->default(0)
+                    ->sortable()
                     ->getStateUsing(function (Borrow $record) {
                         $return_of_date = $record->return_of_date ? $record->return_of_date : null;
 
@@ -87,7 +84,7 @@ class BorrowResource extends Resource
                         $setting = Setting::first();
 
                         $diff = $return_of_date ? $record->return_date->diffInDays($return_of_date) : 0;
-                        $total_fine = $diff * $setting->fine;
+                        $total_fine = $diff * ($setting->fine ?? 0);
 
                         $record->update([
                             'total_fine' => $total_fine

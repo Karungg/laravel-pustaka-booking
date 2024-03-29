@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BookResource\Pages;
-use App\Filament\Resources\BookResource\RelationManagers;
 use App\Models\Book;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
@@ -12,8 +11,6 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
 class BookResource extends Resource
@@ -62,34 +59,41 @@ class BookResource extends Resource
                             ->required(),
                         Forms\Components\TextInput::make('number_of_pages')
                             ->required()
-                            ->maxLength(4),
+                            ->maxLength(4)
+                            ->numeric()
+                            ->minValue(1),
                         Forms\Components\TextInput::make('heavy')
                             ->required()
-                            ->numeric(),
+                            ->numeric()
+                            ->minValue(1),
                         Forms\Components\TextInput::make('wide')
                             ->required()
-                            ->numeric(),
+                            ->numeric()
+                            ->minValue(1),
                         Forms\Components\TextInput::make('long')
                             ->required()
-                            ->numeric(),
+                            ->numeric()
+                            ->minValue(1),
                         Forms\Components\TextInput::make('languange')
                             ->required()
                             ->maxLength(128),
                         Forms\Components\TextInput::make('isbn')
                             ->required()
-                            ->maxLength(64),
+                            ->maxLength(64)
+                            ->numeric()
+                            ->minValue(0),
                         Forms\Components\TextInput::make('stocks')
                             ->required()
                             ->numeric()
-                            ->default(0),
+                            ->minValue(1),
                         Forms\Components\TextInput::make('borrowed')
                             ->required()
                             ->numeric()
-                            ->default(0),
+                            ->minValue(0),
                         Forms\Components\TextInput::make('booked')
                             ->required()
                             ->numeric()
-                            ->default(0),
+                            ->minValue(0),
                     ])->columnSpan(4)
             ])->columns(12);
     }
@@ -99,32 +103,19 @@ class BookResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('category.title')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('author')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('publisher')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('publication_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('number_of_pages')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('heavy')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('wide')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('long')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('languange')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('isbn')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('stocks')
@@ -136,7 +127,6 @@ class BookResource extends Resource
                 Tables\Columns\TextColumn::make('booked')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
