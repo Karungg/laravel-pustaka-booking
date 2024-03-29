@@ -2,11 +2,14 @@
 
 namespace App\Services\Booking;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
 interface BookingService
 {
     public function getTemps(): Collection;
+
+    public function getTempById(): Collection;
 
     public function getMaxBooks(): int;
 
@@ -14,11 +17,9 @@ interface BookingService
 
     public function destroy($bookId): int;
 
-    public function getTempById(): Collection;
-
     public function checkout();
 
     public function isBookingAlreadyExist(): bool;
 
-    public function getHistory();
+    public function getHistory(): Paginator;
 }

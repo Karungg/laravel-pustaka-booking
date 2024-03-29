@@ -5,6 +5,7 @@ namespace App\Services\Booking;
 use App\Enums\BookingStatus;
 use App\Models\Booking;
 use App\Services\Booking\BookingService;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -18,6 +19,13 @@ class BookingServiceImpl implements BookingService
             ->join('categories', 'books.category_id', 'categories.id')
             ->select('categories.title as category', 'books.id', 'books.title', 'books.author', 'books.image', 'temps.created_at')
             ->where('users.id', auth()->id())
+            ->get();
+    }
+
+    public function getTempById(): Collection
+    {
+        return DB::table('temps')
+            ->where('user_id', auth()->id())
             ->get();
     }
 
@@ -44,18 +52,11 @@ class BookingServiceImpl implements BookingService
             ->delete();
     }
 
-    public function getTempById(): Collection
-    {
-        return DB::table('temps')
-            ->where('user_id', auth()->id())
-            ->get();
-    }
-
     public function checkout()
     {
         $bookingId = Booking::insertGetId([
             'user_id' => auth()->id(),
-            'take_limit' => now()->addDays(3),
+            'take_limit' => now()->addDays(1),
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -90,7 +91,7 @@ class BookingServiceImpl implements BookingService
             ->exists();
     }
 
-    public function getHistory()
+    public function getHistory(): Paginator
     {
         return DB::table('booking_items')
             ->join('bookings', 'booking_id', 'bookings.id')
