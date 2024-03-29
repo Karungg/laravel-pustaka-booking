@@ -23,7 +23,7 @@ class Category extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @method array
      */
     protected function casts()
     {

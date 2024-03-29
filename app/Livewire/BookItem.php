@@ -21,9 +21,9 @@ class BookItem extends Component
     public function storeBook(BookingService $bookingService, $bookId)
     {
         if (auth()->check()) {
-            if ($bookingService->maximumBooks() >= 3) {
+            if ($bookingService->getMaxBooks() >= 3) {
                 $this->error('Maximum booking is 3!');
-            } elseif ($bookingService->bookAlreadyExist($bookId)) {
+            } elseif ($bookingService->isBookAlreadyExist($bookId)) {
                 $this->error('This book is already exist in your list!');
             } else {
                 DB::table('temps')

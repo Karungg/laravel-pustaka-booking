@@ -6,19 +6,19 @@ use Illuminate\Support\Collection;
 
 interface BookingService
 {
-    public function getAll(): Collection;
+    public function getTemps(): Collection;
 
-    public function maximumBooks(): int;
+    public function getMaxBooks(): int;
 
-    public function bookAlreadyExist($bookId): bool;
+    public function isBookAlreadyExist($bookId): bool;
 
     public function destroy($bookId): int;
 
-    public function getById(): Collection;
+    public function getTempById(): Collection;
 
     public function checkout();
 
-    public function getBookingById(): bool;
+    public function isBookingAlreadyExist(): bool;
 
-    public function getBookings();
+    public function getHistory();
 }

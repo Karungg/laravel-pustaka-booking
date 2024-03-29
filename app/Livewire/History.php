@@ -22,9 +22,9 @@ class History extends Component
     }
 
     #[Computed()]
-    public function bookings()
+    public function history()
     {
-        return $this->bookingService->getBookings();
+        return $this->bookingService->getHistory();
     }
 
     public function render()

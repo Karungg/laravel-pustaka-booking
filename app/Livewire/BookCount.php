@@ -15,7 +15,7 @@ class BookCount extends Component
     #[On('checkout')]
     public function mount(BookingService $bookingService)
     {
-        return $this->count = $bookingService->maximumBooks();
+        return $this->count = $bookingService->getMaxBooks();
     }
 
     public function render()

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class BookingServiceImpl implements BookingService
 {
-    public function getAll(): Collection
+    public function getTemps(): Collection
     {
         return DB::table('temps')
             ->join('users', 'temps.user_id', 'users.id')
@@ -21,14 +21,14 @@ class BookingServiceImpl implements BookingService
             ->get();
     }
 
-    public function maximumBooks(): int
+    public function getMaxBooks(): int
     {
         return DB::table('temps')
             ->where('user_id', auth()->id())
             ->count();
     }
 
-    public function bookAlreadyExist($bookId): bool
+    public function isBookAlreadyExist($bookId): bool
     {
         return DB::table('temps')
             ->where('user_id', auth()->id())
@@ -44,7 +44,7 @@ class BookingServiceImpl implements BookingService
             ->delete();
     }
 
-    public function getById(): Collection
+    public function getTempById(): Collection
     {
         return DB::table('temps')
             ->where('user_id', auth()->id())
@@ -53,24 +53,23 @@ class BookingServiceImpl implements BookingService
 
     public function checkout()
     {
-        $temps =  $this->getById();
-
-        $booking = Booking::insertGetId([
+        $bookingId = Booking::insertGetId([
             'user_id' => auth()->id(),
             'take_limit' => now()->addDays(3),
             'created_at' => now(),
             'updated_at' => now()
         ]);
 
-        foreach ($temps as $temp) {
+        foreach ($this->getTempById() as $temp) {
             DB::table('booking_items')->insert([
-                'booking_id' => $booking,
+                'booking_id' => $bookingId,
                 'book_id' => $temp->book_id,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
 
-            DB::table('books')->where('id', $temp->book_id)
+            DB::table('books')
+                ->where('id', $temp->book_id)
                 ->update([
                     'stocks' => DB::raw('stocks-1'),
                     'booked' => DB::raw('booked+1'),
@@ -83,7 +82,7 @@ class BookingServiceImpl implements BookingService
             ->delete();
     }
 
-    public function getBookingById(): bool
+    public function isBookingAlreadyExist(): bool
     {
         return DB::table('bookings')
             ->where('user_id', auth()->id())
@@ -91,7 +90,7 @@ class BookingServiceImpl implements BookingService
             ->exists();
     }
 
-    public function getBookings()
+    public function getHistory()
     {
         return DB::table('booking_items')
             ->join('bookings', 'booking_id', 'bookings.id')

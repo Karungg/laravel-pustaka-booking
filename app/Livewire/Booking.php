@@ -26,12 +26,12 @@ class Booking extends Component
     #[Computed()]
     public function bookings()
     {
-        return $this->bookingService->getAll();
+        return $this->bookingService->getTemps();
     }
 
     public function checkout(BookingService $bookingService)
     {
-        if ($bookingService->getBookingById()) {
+        if ($bookingService->isBookingAlreadyExist()) {
             $this->error('Please complete your booking');
         } else {
             $this->dispatch('checkout');

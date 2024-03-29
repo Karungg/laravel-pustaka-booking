@@ -6,7 +6,7 @@
         <div class="container mx-auto flex justify-center flex-wrap pt-4 pb-12">
             <div class="flex flex-col">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    @if ($this->bookings->count() > 0)
+                    @if ($this->history->count() > 0)
                         <div class="min-w-full py-2 align-middle md:px-6 lg:px-8 flex justify-end">
                             <form action="{{ route('history.pdf') }}" method="post">
                                 @csrf
@@ -48,24 +48,24 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    @forelse ($this->bookings as $booking)
+                                    @forelse ($this->history as $data)
                                         <tr>
                                             <td
                                                 class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                 <div class="inline-flex items-center gap-x-3">
-                                                    <span>{{ $booking->created_at }}</span>
+                                                    <span>{{ $data->created_at }}</span>
                                                 </div>
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {{ $booking->take_limit }}
+                                                {{ $data->take_limit }}
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {{ $booking->status }}</td>
+                                                {{ $data->status }}</td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {{ $booking->title }}</td>
+                                                {{ $data->title }}</td>
 
                                         @empty
                                             <td
@@ -80,7 +80,7 @@
                             </table>
                         </div>
                         <div class="mt-2">
-                            {{ $this->bookings()->links() }}
+                            {{ $this->history()->links() }}
                         </div>
                     </div>
                 </div>
