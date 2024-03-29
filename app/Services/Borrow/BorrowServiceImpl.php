@@ -42,6 +42,13 @@ class BorrowServiceImpl implements BorrowService
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
+
+            DB::table('books')
+                ->where('id', $item->book_id)
+                ->update([
+                    'booked' => DB::raw('booked-1'),
+                    'borrowed' => DB::raw('borrowed+1')
+                ]);
         }
 
         DB::table('bookings')
