@@ -44,6 +44,16 @@ class BookingServiceImpl implements BookingService
             ->exists();
     }
 
+    public function isStockAvaliable($bookId): bool
+    {
+        $book = DB::table('books')
+            ->where('id', $bookId)
+            ->select('stocks')
+            ->first();
+
+        return $book->stocks == 0;
+    }
+
     public function destroy($bookId): int
     {
         return DB::table('temps')

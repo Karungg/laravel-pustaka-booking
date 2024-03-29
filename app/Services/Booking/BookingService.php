@@ -15,6 +15,8 @@ interface BookingService
 
     public function isBookAlreadyExist($bookId): bool;
 
+    public function isStockAvaliable($bookId): bool;
+
     public function destroy($bookId): int;
 
     public function checkout();

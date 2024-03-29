@@ -47,7 +47,8 @@ class BorrowServiceImpl implements BorrowService
                 ->where('id', $item->book_id)
                 ->update([
                     'booked' => DB::raw('booked-1'),
-                    'borrowed' => DB::raw('borrowed+1')
+                    'borrowed' => DB::raw('borrowed+1'),
+                    'updated_at' => now()
                 ]);
         }
 
@@ -55,7 +56,8 @@ class BorrowServiceImpl implements BorrowService
             ->where('user_id', $booking->user_id)
             ->where('status', BookingStatus::Pending)
             ->update([
-                'status' => BookingStatus::Accepted
+                'status' => BookingStatus::Accepted,
+                'updated_at' => now()
             ]);
 
         redirect(route('filament.admin.resources.bookings.index'));

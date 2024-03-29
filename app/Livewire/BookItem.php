@@ -23,6 +23,8 @@ class BookItem extends Component
         if (auth()->check()) {
             if ($bookingService->getMaxBooks() >= 3) {
                 $this->error('Maximum booking is 3!');
+            } elseif ($bookingService->isStockAvaliable($bookId)) {
+                $this->error('This book is sold out!');
             } elseif ($bookingService->isBookAlreadyExist($bookId)) {
                 $this->error('This book is already exist in your list!');
             } else {
@@ -33,7 +35,6 @@ class BookItem extends Component
                         'created_at' => now(),
                         'updated_at' => now()
                     ]);
-
                 $this->dispatch('book-stored');
                 $this->info('Book successfully added!');
             }
