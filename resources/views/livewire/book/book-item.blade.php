@@ -5,6 +5,11 @@
     </div>
     <p class="">{{ $book->title }}</p>
     <div class="flex justify-end mt-3">
+        <a href="{{ route('book.show', $book->slug) }}">
+            <x-button class="mx-2">
+                {{ __('Detail') }}
+            </x-button>
+        </a>
         <x-button wire:click.prevent='storeBook({{ $book->id }})'>
             {{ __('Booking') }}
         </x-button>
